@@ -19,16 +19,19 @@ public class AgentMain {
     public static void Byte(Instrumentation instrumentation){
         try {
             AgentBuilder.Identified.Extendable builder1 = new AgentBuilder.Default()
-                    .type(ElementMatchers.nameContains("com.example.dome.HelloTest"))
+                    .with(DebugListener.getListener())
+                    .type(ElementMatchers.named("org.springframework.beans.factory.support.AbstractBeanFactory"))
+                    .transform((transformBuild, typeDescription, classLoader, javaModule) ->{
+                        return transformBuild.method(ElementMatchers.named("doGetBean"))
+                                .intercept(MethodDelegation.to(SpringInterceptor.class));
+             });
 
-                    .transform((builder, typeDescription, classLoader, javaModule) ->{
-                        return builder.method(ElementMatchers.any())
-                                .intercept(MethodDelegation.to(SpringControllerInterceptor.class));
-                    });
             builder1.installOn(instrumentation);
         }catch (Exception e){
             e.printStackTrace();
             System.out.println(e.getMessage());
         }
     }
+
+
 }

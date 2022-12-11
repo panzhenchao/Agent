@@ -33,6 +33,11 @@
             <artifactId>servlet-api</artifactId>
             <version>2.5</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>23.0</version>
+        </dependency>
     </dependencies>
     <packaging>jar</packaging>
     <build>
@@ -49,11 +54,11 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>com.core.AgentMain</mainClass>
+                            <mainClass>com.merval.AgentMain</mainClass>
                         </manifest>
                         <manifestEntries>
                             <Premain-Class>
-                                com.core.AgentMain
+                                com.merval.AgentMain
                             </Premain-Class>
                             <Can-Redefine-Classes>true</Can-Redefine-Classes>
                             <Can-Retransform-Classes>true</Can-Retransform-Classes>
